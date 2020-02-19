@@ -4,6 +4,4 @@
 
 **Authors: Weiwei Shang, Fangjing Song, Zengzhi Zhao, Hongbo Gao, Shuang Cong, Zhijun Li**
 
-Here are some instructions for different parts in source code:
-
-See the README.md in the subfolder for details.
+See the README.md in the subfolders for details.
