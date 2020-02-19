@@ -1,0 +1,2 @@
+palm_poses.txt,100zxyzws.txt由generate_pose.py生成
+hand_poses.txt由Pycharm中的sim_code/get_pose.py生成

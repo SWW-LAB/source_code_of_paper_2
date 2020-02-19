@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="om">
+    <static>true</static>
+    <link name="link">
+      <pose>-0.0 -0.0 0.0276 1.570796  0 -1.570796</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>/home/well/graspit/models/objects/sim_model/31.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>/home/well/graspit/models/objects/sim_model/31.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
