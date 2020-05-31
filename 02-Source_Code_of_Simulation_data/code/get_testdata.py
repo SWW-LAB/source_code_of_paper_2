@@ -6,9 +6,9 @@ from get_patch import get_patch
 
 def index2num(index):
     '''
-    从总的下标到模型序列号的转换
-    :param index: 总的下标
-    :return: 模型序列号
+    Conversion from total subscript to model index number
+    :param index: total subscript
+    :return: model index number
     '''
     sum_num = -1
     for i in range(65):
@@ -23,14 +23,14 @@ def index2num(index):
 
 def get_testdata(index, model,save_path):
     '''
-    生成测试样本
-    :param index: 选择的抓取位姿
-    :param model: 选择的模型
+    Generate test samples
+    :param index: chosen grasp posture
+    :param model: chosen model
     :return: zxyzw
     '''
-    index = index  # 选择的抓取位姿
+    index = index  # chosen grasp posture
     num = index2num(index)
-    model = model  # 选择的模型
+    model = model  # chosen model
     if num == model:
         print('num is model,please input new model')
         model += 1
@@ -63,10 +63,10 @@ def get_testdata(index, model,save_path):
 
 
 if __name__=='__main__':
-    index = 740 #选择的抓取位姿
+    index = 740 #chosen grasp posture
     num = index2num(index)
     print(num)
-    model = 49 #选择的模型
+    model = 49 #chosen model
 
     pose_file =open('/home/well/simulation_data/grasps_pose.txt','rb')
     poses = pickle.load(pose_file)
