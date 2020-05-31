@@ -113,7 +113,7 @@ def getHandPose(palmpose):
     handrotm = [wTh[0][0:3],wTh[1][0:3],wTh[2][0:3]]
     return handpose, handrotm
 
-#要分好几种情况,还是直接使用MATLAB中的rotm2quat函数
+#divided into several situations, or use the rotm2quat function in MATLAB directly
 def rotm2quat(rotm):
     w = np.sqrt(1+rotm[0][0]+rotm[1][1]+rotm[2][2])
     x = (rotm[2][1]-rotm[1][2])/(4*w)
@@ -125,14 +125,14 @@ def randomPalmPosition(graspit, palm_pose_center):
     '''
     change the position of the palm randomly
     '''
-    #hand_pose 是灵巧手在graspIT中的坐标系,palm_pose是自定义的坐标系,它们都相对于世界坐标系
-    palm_pose_center = palm_pose_center  #人为设定的最优点
-    palm_pose_x = np.random.normal(palm_pose_center[0],0.01,10)[0] #正态分布
+    #hand_pose is the coordinate system of the dexterous hand in graspIt,palm_pose is a self-definition coordinate system,which are both relative to the world coordinate system
+    palm_pose_center = palm_pose_center  #Optimal point seted artificially 
+    palm_pose_x = np.random.normal(palm_pose_center[0],0.01,10)[0] #Normal distribution
     palm_pose_y = np.random.normal(palm_pose_center[1],0.01,10)[0]
-    palm_pose = [palm_pose_x, palm_pose_y, palm_pose_center[2]]   #手掌初始位置
+    palm_pose = [palm_pose_x, palm_pose_y, palm_pose_center[2]]   #start position of palm
     print 'palm_pose:', palm_pose
     hand_pose_init, handrotm = getHandPose(palm_pose)
-    print 'handrotm:', handrotm  #grapit中手坐标系关于世界坐标系的旋转矩阵
+    print 'handrotm:', handrotm  #The rotation matrix of the hand coordinate system with respect to the world coordinate system in grapit
     hand_pose = Pose()
     #in graspit ,the unit is m
     hand_pose.position.x = hand_pose_init[0]
@@ -177,7 +177,7 @@ def generateGrasps(model_index,palm_pose_center):
     graspit_udf.clearWorld()
     world_file = 'compare_shadow'
     graspit_udf.loadWorld(world_file)
-    palm_pose_center = palm_pose_center  #人为设定的最优点  
+    palm_pose_center = palm_pose_center  #Optimal point seted artificially   
     good_grasps = []
     bad_grasps = []        
     for times in range(10):
@@ -195,7 +195,7 @@ def generateGrasps(model_index,palm_pose_center):
         print 'len_goodgrasps:',len(good_grasps) 
         print 'len_badgrasps:',len(bad_grasps) 
      
-    #从后面几个开始,刚开始就应该自动化的
+    #From the next few, it should be automated at the beginning
     model_index = str(model_index)
     #file_path = '/home/well/simulation_data1.0/graspit_data/'+model_index +'.txt'
     file_path = '/home/well/simulation_data5.0/bad_graspit_data/'+model_index +'.txt'
@@ -215,7 +215,7 @@ def generate_grasps(model_index,palm_pose_center,world_file,save_path):
     graspit_udf = GraspitCommander()
     graspit_udf.clearWorld()
     graspit_udf.loadWorld(world_file)
-    palm_pose_center = palm_pose_center  #人为设定的最优点  
+    palm_pose_center = palm_pose_center  #Optimal point seted artificially    
     good_grasps = []        
     for times in range(10):
         randomPalmPosition(graspit_udf,palm_pose_center)
@@ -230,7 +230,7 @@ def generate_grasps(model_index,palm_pose_center,world_file,save_path):
         print 'len_goodgrasps:',len(good_grasps) 
 
      
-    #从后面几个开始,刚开始就应该自动化的
+    #From the next few, it should be automated at the beginning
     model_index = str(model_index)
     file_path = save_path + model_index +'.txt'
     #write 
@@ -266,7 +266,7 @@ def main():
 
 def select_grasps():
     '''
-    修改抓取,并筛选出来
+    Modify the grasps and select them out
     ''' 
     rospy.init_node('random_palm_position')
     num = sys.argv[1]
@@ -339,7 +339,7 @@ def select_grasps():
 
 def test_grasps():
     '''
-    查看抓取,确保无误
+    Check the grasp to make sure it is correct
     ''' 
     rospy.init_node('random_palm_position')
     num = sys.argv[1]
@@ -424,7 +424,7 @@ def test_z():
         j[0] = 0
         j[1] = 0
         j[-1] = -z_size[i]
-        palm_pose_center = j  #人为设定的最优点  
+        palm_pose_center = j  #Optimal point seted artificially 
         randomPalmPosition(graspit_udf,palm_pose_center)
         graspit_udf.toggleAllCollisions(False)
         if raw_input() == 'c':
