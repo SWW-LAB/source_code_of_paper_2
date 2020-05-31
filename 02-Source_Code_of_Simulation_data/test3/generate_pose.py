@@ -30,7 +30,7 @@ def get_data():
             zxyzw += j[1:4]
             zxyzw.append(j[0])
             zxyzws.append(zxyzw)
-#手掌坐标
+#Palm coordinates
             pose = Pose()
             pose.position.x = 2.74984779e-02
             pose.position.y = 2.39839815e-02 
