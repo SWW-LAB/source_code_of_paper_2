@@ -31,14 +31,14 @@ def callback(data):
     cv2.imwrite('/home/well/1.jpg', cv_image)    
 
 def load_model(num,name):
-    #加载模型文件
+    #load model files
     file_path = '/home/well/simulation_data/gazebo_data/sdf_file/o'+num+'.sdf'
     #name = '"model"'
     command = 'rosrun gazebo_ros spawn_model -sdf -file ' + file_path + ' -model ' + '\"' + name +'\"'
     os.system(command)
 
 def del_model(name):
-    #删除模型文件
+    #delete model files
     command = 'rosservice call /gazebo/delete_model "model_name: ' +'\'' + name + '\'' +'\"'
     os.system(command)
 
@@ -55,8 +55,8 @@ if __name__ == '__main__':
 ##        del_model('object')
     #load_model('cube','standard')
 #        load_model(num,'object')
-    #订阅image topic 并保存
-    #print 'input s to start:' #检测物体坐标系
+    #Subscribe to image topic and save
+    #print 'input s to start:' #Detect object coordinate system
     #if raw_input() == 's':
     #    pass
     #else:
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 #
  #       rospy.Subscriber('/kinect/depth/image_raw', Image,depth_callback,num)
  #       rospy.sleep(1)
- #       print 'input f to finish:',num  #保存世界文件,以及保存图像文件
+ #       print 'input f to finish:',num  #Save world files, and save image files
  #       if raw_input() == 'f':
  #           pass
 
