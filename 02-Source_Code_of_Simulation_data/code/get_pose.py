@@ -21,8 +21,8 @@ from graspit_interface.msg import (
 
 def get_pose(pose):
     '''
-    :param grasp: 一次抓取的pose
-    :return: 手掌坐标系相对于世界坐标系的转换矩阵
+    :param grasp: One-time grasp pose
+    :return: Transformation matrix of palm coordinate system relative to world coordinate system
     '''
     orientation = pose.orientation
     position = pose.position
@@ -37,19 +37,19 @@ def get_pose(pose):
     wTh = np.concatenate((wRh, trans), axis=1)
     temp = np.array([0, 0, 0, 1])
     temp.shape = (1,4)
-    wTh = np.concatenate((wTh, temp), axis=0)  #graspit中灵巧手相对于世界坐标系的转换矩阵
+    wTh = np.concatenate((wTh, temp), axis=0)  #The transformation matrix of hand relative coordinate system to the world coordinate system in graspit
     hTp = np.array([[1, 0, 0, 0.068],
                     [0, 1, 0, -0.020],
                     [0, 0, 1, 0.012],
-                    [0, 0, 0, 1]])            #手掌坐标系相对于灵巧手坐标系的转换矩阵
+                    [0, 0, 0, 1]])            #Transformation matrix of palm coordinate system relative to hand coordinate system
     wTp = np.dot(wTh, hTp)
-    return wTp  #手掌坐标系相对于世界坐标系(物体坐标系)oTp
+    return wTp  #Transformation matrix of palm coordinate system relative to world coordinate system (object coordinate system)oTp
 
 def get_hand_pose(pose):
     '''
-    手掌坐标到手坐标的转换
-    :param pose:手掌的pose
-    :return:graspit中手的pose
+    Transform of palm coordinates to hand coordinates
+    :param pose:palm pose
+    :return:hand pose in graspit
     '''
     orientation = pose.orientation
     position = pose.position
@@ -64,24 +64,25 @@ def get_hand_pose(pose):
     wTp = np.concatenate((wRp, trans), axis=1)
     temp = np.array([0, 0, 0, 1])
     temp.shape = (1, 4)
-    wTp = np.concatenate((wTp, temp), axis=0)  # graspit中灵巧手手掌相对于世界坐标系的转换矩阵
+    wTp = np.concatenate((wTp, temp), axis=0)  #Transformation matrix of hand relative coordinate system to the world coordinate system in graspit
     pTh = np.array([[1, 0, 0, -0.068],
                     [0, 1, 0, 0.020],
                     [0, 0, 1, -0.012],
-                    [0, 0, 0, 1]])  # 手坐标系相对于灵巧手掌坐标系的转换矩阵
+                    [0, 0, 0, 1]])  #Conversion matrix of hand coordinate system relative to palm coordinate system
     wTh = np.dot(wTp, pTh)
-    return wTh  # 手坐标系相对于世界坐标系(物体坐标系)oTh
+    return wTh  #Transformation matrix of hand coordinate system relative to world coordinate system (object coordinate system)oTh
 
-#从文件中获取物体坐标系相对于世界坐标系的转换矩阵,注意前5种自己画的模型的wTo是单位矩阵
+#Obtain the transformation matrix of the object coordinate system relative to the world coordinate system from the file.
+#Note that the wTo of the first five models drawn by yourself is the identity matrix
 def get_wTo(file_path):
     '''
-    :param file_path: 物体的sdf文件位置
-    :return: wTo,物体坐标系相对于世界坐标系的转换矩阵
+    :param file_path: The sdf file location of object
+    :return: wTo, Transformation matrix of the object coordinate system relative to the world coordinate system
     '''
     wTo = np.array([[0,0,-1],
                     [-1,0,0],
                     [0,1,0],
-                    [0,0,0]])# 需要从物体的sdf文件中读取
+                    [0,0,0]])#  read from the sdf file of the objects
     with open(file_path,'r') as f:
         line = f.readline()
         while 'pose' not in line:
@@ -98,24 +99,25 @@ def get_wTo(file_path):
 
 def pose2patch(pose,wTo):
     '''
-    :param pose: 手掌坐标系相对于世界坐标系的转换矩阵,以及gazebo中物体坐标系相对于世界坐标系的转换矩阵
-    :return: patch的中心位置和角度
+    :param pose:Transformation matrix of palm coordinate system relative to world coordinate system, 
+    and Transformation matrix of object coordinate system relative to world coordinate system in gazebo
+    :return:  center position and angle of patch
     '''
 
     iTc = np.array([[554.254691191187, 0.0, 320.5, -0.0],
                     [0.0, 554.254691191187, 240.5, 0.0],
                     [0.0, 0.0, 1.0, 0.0],
-                    [0,0,0,1]]) #内参矩阵没问题
+                    [0,0,0,1]]) #Internal reference matrix
 
     csimTc = np.array([[0,0,1,0],
                        [-1,0,0,0],
                        [0,-1,0,0],
-                       [0,0,0,1]])   #也没有问题
+                       [0,0,0,1]])   
     #
     # wTcsim = np.array([[-0.9991, 0.0005, -0.0433, 0.8632],
     #                 [-0.0007, -1, 0.0054, 0],
     #                 [-0.0433, 0.0054, 0.9990, 0.2859],
-    #                 [0, 0, 0, 1]])                     #也没问题,旋转矩阵的原因???
+    #                 [0, 0, 0, 1]])                     
 
     wTcsim = np.array([[-1, 0.000, -0.0, 0.8632],
                     [-0.000, -1, 0.0, 0],
@@ -144,22 +146,23 @@ def pose2patch(pose,wTo):
 
 def test_pose2patch(pose,wTo):
     '''
-    :param pose: 手掌坐标系相对于世界坐标系的转换矩阵,以及gazebo中物体坐标系相对于世界坐标系的转换矩阵
-    :return: patch的中心位置和角度
+    :param pose:Transformation matrix of palm coordinate system relative to world coordinate system, 
+    and Transformation matrix of object coordinate system relative to world coordinate system in gazebo
+    :return:  center position and angle of patch
     '''
 
     iTc = np.array([[554.254691191187, 0.0, 320.5, -0.0],
                     [0.0, 554.254691191187, 240.5, 0.0],
-                    [0.0, 0.0, 1.0, 0.0]]) #内参矩阵没问题
+                    [0.0, 0.0, 1.0, 0.0]]) 
     csimTc = np.array([[0,0,1,0],
                        [-1,0,0,0],
                        [0,-1,0,0],
-                       [0,0,0,1]])   #也没有问题
+                       [0,0,0,1]])  
     #
     # wTcsim = np.array([[-0.9991, 0.0005, -0.0433, 0.8632],
     #                 [-0.0007, -1, 0.0054, 0],
     #                 [-0.0433, 0.0054, 0.9990, 0.2859],
-    #                 [0, 0, 0, 1]])                     #也没问题,旋转矩阵的原因???
+    #                 [0, 0, 0, 1]])                   
 
     wTcsim = np.array([[-1, 0.000, -0.0, 0.8632],
                     [-0.000, -1, 0.0, 0],
@@ -189,7 +192,7 @@ def test_pose2patch(pose,wTo):
     print('i_origin_p',i_origin_p)
     center = iTp[:,3]/iTp[2,3]
     # center = iTp[:, 3]
-    # p_x = np.dot(iTp,np.array([[1],[0],[0],[1]])) #手掌坐标系的x轴在图像中的像素位置
+    # p_x = np.dot(iTp,np.array([[1],[0],[0],[1]]))#The pixel position of the x axis of the palm coordinate system in the image
     # p_x = p_x/p_x[2][0]
     # tan_angle = (center[1]-i_x_p[1])/(i_x_p[0]-center[0])
     # angle = math.degrees(math.atan(tan_angle))
@@ -202,8 +205,8 @@ def test_pose2patch(pose,wTo):
 
 def quat2rotm(quat):
     '''
-    :param quat: 四元素(x,y,z,w)
-    :return: 旋转矩阵
+    :param quat: Quaternion(x,y,z,w)
+    :return: Rotation matrix
     '''
     x = quat[0]
     y = quat[1]
@@ -225,7 +228,7 @@ if __name__ == '__main__':
     #  wTo = np.array([[0, 0, -1, 0],
     #                  [-1, 0, 0, 0],
     #                  [0, 1, 0, 0],
-    #                  [0, 0, 0, 1]])  # 由于0到4模型是自己画的,所以他们的物体坐标系和gazebo中的世界坐标系是重合的
+    #                  [0, 0, 0, 1]])  
     #  print(wTo)
     #  print(grasps[0])
     #  pose = get_pose(grasps[0].pose)
