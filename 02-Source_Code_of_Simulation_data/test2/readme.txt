@@ -1,2 +1,2 @@
-这次测试的是网络中patch输入改变,而位姿输入不变.
-使用的测试数据是test2中的数据,通过物体1的位姿,获得物体2的patch以及手势,观察手势的区别.
+This test refors to that the patch input in the network changes while the pose input does not change.
+The test data uses the data in test2.Through the pose of object 1, the patch and gesture of object 2 are obtained and the difference between gestures is observed.
