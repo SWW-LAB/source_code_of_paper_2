@@ -59,7 +59,7 @@ def save_poseAnddofs():
         grasp_path = data_path + str(index) + '/'
         grasp_files = os.listdir(grasp_path)
         grasp_files.sort()
-    # grasp_files = sorted(grasp_files, key=lambda x: os.path.getmtime(os.path.join(grasp_path, x)))  # 按文件时间进行排序
+    # grasp_files = sorted(grasp_files, key=lambda x: os.path.getmtime(os.path.join(grasp_path, x)))  #  Sorted by file time
         files_num = len(grasp_files)
     # print(files_num)
 
@@ -96,7 +96,7 @@ def test(index):
         grasp_path = data_path + str(index) + '/'
         grasp_files = os.listdir(grasp_path)
         grasp_files.sort()
-    # grasp_files = sorted(grasp_files, key=lambda x: os.path.getmtime(os.path.join(grasp_path, x)))  # Sort by file time
+    # grasp_files = sorted(grasp_files, key=lambda x: os.path.getmtime(os.path.join(grasp_path, x)))  # Sorted by file time
         files_num = len(grasp_files)
 
         for i in range(files_num):
@@ -137,7 +137,7 @@ def get_patches():
         grasp_path = data_path + str(index) + '/'
         grasp_files = os.listdir(grasp_path)
         grasp_files.sort()
-        # grasp_files = sorted(grasp_files, key=lambda x: os.path.getmtime(os.path.join(grasp_path, x)))  # Sort by file time
+        # grasp_files = sorted(grasp_files, key=lambda x: os.path.getmtime(os.path.join(grasp_path, x)))  # Sorted by file time
         files_num = len(grasp_files)
         # print(files_num)
         length = []
@@ -192,7 +192,8 @@ def getPatches(patch_size,pose_file,index,depth_path='/home/well/simulation_data
         wTo = np.array([[0, 0, -1, 0],
                             [-1, 0, 0, 0],
                             [0, 1, 0, 0],
-                            [0, 0, 0, 1]])  # 由于0到4模型是自己画的,所以他们的物体坐标系和gazebo中的世界坐标系是重合的
+                            [0, 0, 0, 1]])
+     # Since the 0 to 4 models are drawn by hand, their object coordinate and the world coordinate in gazebo are coincident
     else:
         wTo = get_wTo(sdf_path)
     for i,j in enumerate(poses):
