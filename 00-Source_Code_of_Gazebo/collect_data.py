@@ -49,14 +49,14 @@ def callback(data):
     cv2.imwrite('/home/well/1.jpg', cv_image)    
 
 def load_model(sdf_path,name):
-    #加载模型文件
+    #load model files
     file_path = sdf_path
     #name = '"model"'
     command = 'rosrun gazebo_ros spawn_model -sdf -file ' + file_path + ' -model ' + '\"' + name +'\"'
     os.system(command)
 
 def del_model(name):
-    #删除模型文件
+    #Delete model files
     command = 'rosservice call /gazebo/delete_model "model_name: ' +'\'' + name + '\'' +'\"'
     os.system(command)
 
@@ -67,8 +67,8 @@ def test():
     #load_model('cube','standard')
     sdf_path = '/home/well/simulation_data3.0/test2/gazebo_data/o' + num +'.sdf'
     load_model(sdf_path,'object')
-    #订阅image topic 并保存
-    #print 'input s to start:' #检测物体坐标系
+    #subscribe to image topic and save the image
+    #print 'input s to start:' #Detect the object coordinate system
     #if raw_input() == 's':
      #   pass
     #else:
@@ -87,7 +87,7 @@ def test():
     curv_path = '/home/well/simulation_data3.0/test5/test_dataset/cur/' + num + '.jpg'
     rospy.Subscriber('/kinect/depth/points', PointCloud2,points_callback,[normal_path,curv_path])
     rospy.sleep(5)
-    print 'input f to finish:'  #保存世界文件,以及保存图像文件
+    print 'input f to finish:'  #Save world files and image files
     if raw_input() == 'f':
         pass
 
@@ -99,8 +99,8 @@ def test1():
     #load_model('cube','standard')
     sdf_path = '/home/well/simulation_data3.0/test2/gazebo_data/o' + num +'.sdf'
     load_model('','object')
-    #订阅image topic 并保存
-    #print 'input s to start:' #检测物体坐标系
+    #subscribe to image topic and save the image
+    #print 'input s to start:' #Detect object coordinate system
     #if raw_input() == 's':
      #   pass
     #else:
@@ -119,7 +119,7 @@ def test1():
     curv_path = '/home/well/simulation_data3.0/test5/test_dataset/cur/' + num + '.jpg'
     rospy.Subscriber('/kinect/depth/points', PointCloud2,points_callback,[normal_path,curv_path])
     rospy.sleep(5)
-    print 'input f to finish:'  #保存世界文件,以及保存图像文件
+    print 'input f to finish:'  #Save world files, and save image files
     if raw_input() == 'f':
         pass
 
@@ -137,8 +137,8 @@ if __name__ == '__main__':
     #sdf_path = '/home/well/simulation_data/gazebo_data/sdf_file/o' + num +'.sdf'
     sdf_path = '/home/well/simulation_data/gazebo_data/sdf_file/ocube.sdf'
     load_model(sdf_path,'object')
-    #订阅image topic 并保存
-    #print 'input s to start:' #检测物体坐标系
+    #subscribe to image topic and save the image
+    #print 'input s to start:' #Detect the object coordinate system
     #if raw_input() == 's':
      #   pass
     #else:
@@ -158,7 +158,7 @@ if __name__ == '__main__':
     #curv_path = '/home/well/simulation_data3.0/test5/curvature/' + num + '.jpg'
     #rospy.Subscriber('/kinect/depth/points', PointCloud2,points_callback,[normal_path,curv_path])
     #rospy.sleep(5)
-    #print 'input f to finish:'  #保存世界文件,以及保存图像文件
+    #print 'input f to finish:'  #Save world files, and save image files
     #if raw_input() == 'f':
     #    pass
 
