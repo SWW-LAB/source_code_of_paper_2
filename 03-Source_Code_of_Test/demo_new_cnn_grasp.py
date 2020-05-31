@@ -57,7 +57,7 @@ if __name__ == '__main__':
     rospy.init_node('img2grasp',anonymous=True)
     #first:load picture and processing
     
-    #手势预测
+    #Hand's posture prediction
     graspit_names = ['rh_RFJ4', 'rh_RFJ3', 'rh_RFJ2', 'rh_RFJ1',
               'rh_MFJ4', 'rh_MFJ3', 'rh_MFJ2', 'rh_MFJ1',
               'rh_FFJ4', 'rh_FFJ3', 'rh_FFJ2', 'rh_FFJ1',
@@ -119,7 +119,7 @@ if __name__ == '__main__':
     #start_hand=dict(zip(hand_names, start_valuse))
     #hand_commander.move_to_joint_value_target_unsafe(start_hand, 2.0, True)
 
-  #ur5到达物体位置
+  #ur5 reach the position of the object
     print 'if shadow hand is ready, please enter ok'
     if raw_input() == 'ok':
         pass
@@ -133,7 +133,7 @@ if __name__ == '__main__':
         if key == 'rh_RFJ4' or key == 'rh_MFJ4' or key == 'rh_FFJ4':
             pre_hand[key] = -pre_hand[key]
     print pre_hand
-    #shadow手闭合
+    #shadow hand closure
     hand_commander.move_to_joint_value_target_unsafe(pre_hand, 2.0, True)
     print pre_hand
     print 'input c to continue'
@@ -195,7 +195,7 @@ if __name__ == '__main__':
         for key in  hand_names:
             if zl[key]==0:
                 flag+=1
-            if flag == 16 and th :      #其他四指完成后,大拇指闭合
+            if flag == 16 and th :      #After the other four fingers are completed, the thumb is closed
                 zl['rh_THJ1'] = 0.02
                 zl['rh_THJ2'] = 0.05
                 zl['rh_THJ4'] = 0.1
