@@ -505,7 +505,7 @@ def test5_2():
 def sim5_pre():
     model1 = keras.models.load_model('/home/well/simulation_data5.0/model/pi42.h5',
                                      custom_objects={'keras': keras, 'tf': tf})
-    # 先只测试一次抓取
+    #  Firstly test only one time
     for i in range(4):
         # for i in [3]:
         depth_patches = []
@@ -554,7 +554,7 @@ def sim5_pre():
 def sim5_pre1():
     model1 = keras.models.load_model('/home/well/simulation_data5.0/model/pi48.h5',
                                      custom_objects={'keras': keras, 'tf': tf})
-    # 先只测试一次抓取
+   #  Firstly test only one grasp
     for i in range(4):
         # for i in [3]:
         depth_patches = []
@@ -611,7 +611,7 @@ def sim5_pre1():
 def sim5_test():
     model1 = keras.models.load_model('/home/well/simulation_data5.0/model/pi29.h5',
                                      custom_objects={'keras': keras, 'tf': tf})
-    #先只测试一次抓取
+    #  Firstly test only one grasp
     for i in range(1):
         # for i in [3]:
         depth_patches = []
@@ -695,7 +695,7 @@ def sim5_test1():
                  0.3490, 1.57, 1.157, 1.57,
                  1.047, 1.222, 0.5236, 1.57]
     failure = [[1,6,15,17,23,25],[10,14],[2,5,11,13]]
-    #先只测试一次抓取
+    #Test only one grasp first
     for i in range(3):
         # for i in [3]:
         depth_patches = []
@@ -807,7 +807,7 @@ def sim5_test2():
                  0.3490, 1.57, 1.157, 1.57,
                  0.3490, 1.57, 1.157, 1.57,
                  1.047, 1.222, 0.5236, 1.57]
-    #先只测试一次抓取
+    #Test only one grasp first
     for i in range(3,4):
         # for i in [3]:
         depth_patches = []
@@ -911,7 +911,7 @@ def sim_test3_failure():
                      0.3490, 1.57, 1.157, 1.57,
                      1.047, 1.222, 0.5236, 1.57]
         failure = [[],[0,3,4,8,10,13], [2,5, 12, 11], [0,9,22,21,39]]
-        # 先只测试一次抓取
+       #Test only one grasp first
         for i in range(1,4):
             # for i in [3]:
             depth_patches = []
