@@ -49,7 +49,7 @@ if __name__ == '__main__':
     print 'input s to start ur5'
     if raw_input() == 's':
 	    pass
-#plan0,初始状态
+#plan0,start states
     group.set_joint_value_target(start_states)
     plan0=group.plan()
     group.execute(plan0)
@@ -57,12 +57,13 @@ if __name__ == '__main__':
     print 'input s to start ur5'
     if raw_input() == 's':
 	    exit()
-#plan1.中间状态 
+#plan1.middle states 
     group.set_joint_value_target(joints_values)   
     plan1=group.plan()
     group.execute(plan1)
-    rospy.sleep(1)    #最好停一下,太快,会导致Goal start doesn't match current pose,给robot反应时间
-#plan2, 中间灵巧手姿态调整
+    rospy.sleep(1)   
+#It's better to stop for a while, too fast, it will cause Goal state doesn't match current pose,Give the robot reaction time
+#plan2,adjust dextrous hand's posture 
     pose_target=geometry_msgs.msg.Pose()
     print 'ur5_pose',ur5_pose
     pose_target.orientation.w=ur5_pose[6]
@@ -93,7 +94,7 @@ if __name__ == '__main__':
      #   pass
     group.execute(plan2)
     rospy.sleep(1)
-#plan2,抓取状态
+#plan2 grasp state
     pose_target=geometry_msgs.msg.Pose()
     print 'ur5_pose',ur5_pose
     pose_target.orientation.w=ur5_pose[6]
@@ -119,7 +120,7 @@ if __name__ == '__main__':
         pass
     group.execute(plan2)
     rospy.sleep(1)
-#plan3,终止状态
+#plan3,final state
    # print 'c to continue' 
     pose_target.position.z=ur5_pose[2]+0.1
     group.set_pose_target(pose_target)
@@ -140,7 +141,7 @@ if __name__ == '__main__':
     group.execute(plan3)
     rospy.sleep(1)
     print 'finish:input f'
-#plan4,回到初始状态
+#plan4,return to start state
     group.set_joint_value_target(start_states)
     plan0=group.plan()
     if raw_input() == 'f':
