@@ -18,7 +18,7 @@ from keras.models import Model
 from keras.callbacks import History, ModelCheckpoint,TensorBoard
 from keras.utils import plot_model
 import matplotlib.pyplot as plt
-#由于keras中训练时是先划分数据集再打乱,所以我们要先打乱数据集合
+#Since the train in keras first divides and then scrambles the data set, we need to scramble the data set first.
 import sys
 
 
@@ -31,8 +31,8 @@ def normalizeImag(img):
 
 def shuffle_data(*params):
     '''
-    :param params:数据列表
-    :return: 打乱后的数据
+    :param params:Datasheets
+    :return: Disrupted data
     '''
     params_num = len(params)
     length = len(params[0])
@@ -163,9 +163,9 @@ if __name__ == "__main__":
     model = Model(inputs=[img_input, img_input1, pose_input], outputs=out)
     model.compile(optimizer=adam, loss='mean_squared_error')
 
-    #修改
+    #modify
     plot_model(model,to_file='m47.png')
-    #修改
+    #modify
     checkpoint = ModelCheckpoint('m47.h5', monitor='val_loss', verbose=1, save_best_only=True, mode=min)
     tb_callback = TensorBoard(log_dir='./m47',histogram_freq=0,write_images=False,write_graph=True)
     history = model.fit([img, img1, pose], posture, batch_size=20, epochs=1000, validation_split=0.2, callbacks=[checkpoint,tb_callback])
